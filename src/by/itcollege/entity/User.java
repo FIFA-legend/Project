@@ -14,8 +14,6 @@ public class User {
 
     private Role role;
 
-    //Добавить роль (Enum) из вариантов пользователей: Водитель, Клиент, Диспетчер
-
     public User(String name, String lastName, int id, String password, Role role) {
         this.name = name;
         this.lastName = lastName;
