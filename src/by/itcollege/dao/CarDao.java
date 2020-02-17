@@ -6,7 +6,7 @@ public interface CarDao {
 
     void save(Car car);
 
-    Car read(int id);
+    Car findById(int id);
 
     void update(int id, Car car);
 

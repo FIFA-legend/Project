@@ -1,6 +1,5 @@
 package by.itcollege.dao;
 
-import by.itcollege.connection.ConnectionManager;
 import by.itcollege.entity.Role;
 import by.itcollege.entity.User;
 
@@ -8,6 +7,18 @@ import java.sql.*;
 
 public class UserDaoImpl implements UserDao{
 
+    private static UserDaoImpl INSTANCE;
+
+    private UserDaoImpl() {}
+
+    public static UserDaoImpl newInstance() {
+        if (INSTANCE == null) {
+            synchronized (UserDaoImpl.class) {
+                if (INSTANCE == null) INSTANCE = new UserDaoImpl();
+            }
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void save(User user) {
@@ -31,7 +42,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User read(int id) {
+    public User findById(int id) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 

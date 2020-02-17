@@ -6,7 +6,7 @@ public interface UserDao {
 
     void save(User user);
 
-    User read(int id);
+    User findById(int id);
 
     void update(int id, User user);
 

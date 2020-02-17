@@ -6,7 +6,7 @@ public interface RequestDao {
 
     void save(Request request);
 
-    Request read(int id);
+    Request findById(int id);
 
     void update(int id, Request request);
 

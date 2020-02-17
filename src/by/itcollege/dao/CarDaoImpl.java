@@ -1,6 +1,5 @@
 package by.itcollege.dao;
 
-import by.itcollege.connection.ConnectionManager;
 import by.itcollege.entity.Car;
 import by.itcollege.entity.CarType;
 
@@ -10,6 +9,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CarDaoImpl implements CarDao {
+
+    private static CarDaoImpl INSTANCE;
+
+    private CarDaoImpl() {}
+
+    public static CarDaoImpl newInstance() {
+        if (INSTANCE == null) {
+            synchronized (CarDaoImpl.class) {
+                if (INSTANCE == null) INSTANCE = new CarDaoImpl();
+            }
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void save(Car car) {
@@ -34,7 +46,7 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public Car read(int id) {
+    public Car findById(int id) {
 
         try (Connection connection = ConnectionManager.getConnection()){
 
