@@ -6,7 +6,7 @@ import by.itcollege.entity.User;
 
 import java.sql.*;
 
-public class RequestDaoImpl implements RequestDao{
+public class RequestDaoImpl implements Dao<Request> {
 
     private static RequestDaoImpl INSTANCE;
 

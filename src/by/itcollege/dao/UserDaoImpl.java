@@ -5,7 +5,7 @@ import by.itcollege.entity.User;
 
 import java.sql.*;
 
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements Dao<User> {
 
     private static UserDaoImpl INSTANCE;
 
