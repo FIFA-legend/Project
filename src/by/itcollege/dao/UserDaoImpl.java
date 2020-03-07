@@ -20,23 +20,31 @@ public class UserDaoImpl implements Dao<User> {
         return INSTANCE;
     }
 
-    @Override
-    public void save(User user) {
+    //@Override
+    public int save(User user) {
 
         try (Connection connection = ConnectionManager.getConnection()){
 
             String addUserQuery = "INSERT INTO users(name, last_name, password, role) VALUES (?,?,?,?);";
-            PreparedStatement statement = connection.prepareStatement(addUserQuery);
+            PreparedStatement statement = connection.prepareStatement(addUserQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getRole().toString());
-            statement.execute();
+            statement.executeUpdate();
 
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            user.setId(id);
+
+            rs.close();
             statement.close();
+            return id;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
 
     }
@@ -59,7 +67,7 @@ public class UserDaoImpl implements Dao<User> {
                 if (rs.getString("role").toLowerCase().equals("driver")) temp = Role.DRIVER;
                 if (rs.getString("role").toLowerCase().equals("client")) temp = Role.CLIENT;
                 if (rs.getString("role").toLowerCase().equals("dispatcher")) temp = Role.DISPATCHER;
-                user = new User(rs.getString("name"), rs.getString("last_name"), id, rs.getString("password"), temp);
+                user = new User(id, rs.getString("name"), rs.getString("last_name"), rs.getString("password"), temp);
             }
 
             rs.close();

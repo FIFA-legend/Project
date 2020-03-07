@@ -21,8 +21,8 @@ public class RequestDaoImpl implements Dao<Request> {
         return INSTANCE;
     }
 
-    @Override
-    public void save(Request request) {
+    //@Override
+    public boolean save(Request request) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -39,8 +39,11 @@ public class RequestDaoImpl implements Dao<Request> {
 
             statement.close();
 
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
     }

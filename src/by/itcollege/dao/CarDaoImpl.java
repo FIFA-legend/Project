@@ -23,8 +23,8 @@ public class CarDaoImpl implements Dao<Car> {
         return INSTANCE;
     }
 
-    @Override
-    public void save(Car car) {
+    //@Override
+    public boolean save(Car car) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -39,8 +39,11 @@ public class CarDaoImpl implements Dao<Car> {
 
             statement.close();
 
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
     }
