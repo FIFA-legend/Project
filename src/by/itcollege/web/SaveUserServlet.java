@@ -27,7 +27,7 @@ public class SaveUserServlet extends HttpServlet {
         String lastName = req.getParameter("surname");
         String password = req.getParameter("password");
         String repPassword = req.getParameter("repPassword");
-        if (!repPassword.equals(password)) {
+        if (!repPassword.equals(password) || lastName.isEmpty() || name.isEmpty() || password.isEmpty()) {
             resp.sendRedirect("/user/save");
         } else {
             Role role = Role.valueOf(req.getParameter("role"));
