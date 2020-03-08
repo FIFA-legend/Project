@@ -24,8 +24,6 @@
             </select><br><br>
             <input type="submit" value="Save" /> <br><br>
         </form>
-
-        ${pageContext.request.getAttribute("passwords")} <%@ include file="password-fail.jsp"%>
     </div>
 </body>
 </html>

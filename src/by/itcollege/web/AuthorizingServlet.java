@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/authorizing", name = "Authorizing servlet")
@@ -28,7 +29,10 @@ public class AuthorizingServlet extends HttpServlet {
         if (user.getPassword().equals(password)){
             req.setAttribute("name", user.getName());
             req.setAttribute("surname", user.getLastName());
-            req.getRequestDispatcher("/WEB-INF/jsp/after-authorizing.jsp").forward(req, resp);
+            HttpSession session = req.getSession();
+            session.setAttribute("user", user);
+            if (!user.getRole().toString().equals("CLIENT")) req.getRequestDispatcher("/WEB-INF/jsp/after-authorizing-driver-disp.jsp").forward(req, resp);
+            else req.getRequestDispatcher("/WEB-INF/jsp/after-authorizing-client.jsp").forward(req, resp);
         }
         else resp.sendRedirect("/authorizing");
     }

@@ -5,7 +5,7 @@ import by.itcollege.entity.User;
 
 import java.sql.*;
 
-public class UserDaoImpl implements Dao<User> {
+public class UserDaoImpl implements Dao<User>, UserDao {
 
     private static UserDaoImpl INSTANCE;
 
@@ -20,7 +20,7 @@ public class UserDaoImpl implements Dao<User> {
         return INSTANCE;
     }
 
-    //@Override
+    @Override
     public int save(User user) {
 
         try (Connection connection = ConnectionManager.getConnection()){

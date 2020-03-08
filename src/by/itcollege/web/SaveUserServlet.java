@@ -23,13 +23,11 @@ public class SaveUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("passwords", false);
         String name = req.getParameter("name");
         String lastName = req.getParameter("surname");
         String password = req.getParameter("password");
         String repPassword = req.getParameter("repPassword");
         if (!repPassword.equals(password)) {
-            req.setAttribute("passwords", true);
             resp.sendRedirect("/user/save");
         } else {
             Role role = Role.valueOf(req.getParameter("role"));

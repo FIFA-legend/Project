@@ -6,7 +6,7 @@ import by.itcollege.entity.User;
 
 import java.sql.*;
 
-public class RequestDaoImpl implements Dao<Request> {
+public class RequestDaoImpl implements Dao<Request>, CarAndRequestDao<Request> {
 
     private static RequestDaoImpl INSTANCE;
 
@@ -21,7 +21,7 @@ public class RequestDaoImpl implements Dao<Request> {
         return INSTANCE;
     }
 
-    //@Override
+    @Override
     public boolean save(Request request) {
 
         try (Connection connection = ConnectionManager.getConnection()) {

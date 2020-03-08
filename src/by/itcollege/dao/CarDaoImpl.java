@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CarDaoImpl implements Dao<Car> {
+public class CarDaoImpl implements Dao<Car>, CarAndRequestDao<Car> {
 
     private static CarDaoImpl INSTANCE;
 
@@ -23,7 +23,7 @@ public class CarDaoImpl implements Dao<Car> {
         return INSTANCE;
     }
 
-    //@Override
+    @Override
     public boolean save(Car car) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
