@@ -1,6 +1,5 @@
 package by.itcollege.web;
 
-import by.itcollege.dao.UserDaoImpl;
 import by.itcollege.entity.User;
 import by.itcollege.service.UserService;
 
@@ -33,6 +32,9 @@ public class LoginServlet extends HttpServlet {
             if (!user.getRole().toString().equals("CLIENT")) req.getRequestDispatcher("/WEB-INF/jsp/workers-main-page.jsp").forward(req, resp);
             else req.getRequestDispatcher("/WEB-INF/jsp/client-main-page.jsp").forward(req, resp);
         }
-        else resp.sendRedirect("/login");
+        else {
+            req.setAttribute("passwordMatch", false);
+            req.getRequestDispatcher("/WEB-INF/jsp/authorizing-page.jsp").forward(req, resp);
+        }
     }
 }

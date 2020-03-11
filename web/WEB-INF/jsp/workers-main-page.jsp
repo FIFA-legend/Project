@@ -13,7 +13,7 @@
 <body>
     <div align="center">
         Hello, ${sessionScope.user.getName()} ${sessionScope.user.getLastName()}
-        <p>Want to add a car?<input class="button-main-page" type="button" value="Go" onclick="location.href = '/car/save'"></p>
+        <p>Want to add a car?  <input class="button-main-page" type="button" value="Go" onclick="location.href = '/car/save'"></p>
     </div>
 </body>
 </html>

@@ -31,7 +31,7 @@ public class SaveRequestServlet extends HttpServlet {
         int beginTimeYear = Integer.parseInt(req.getParameter("beginTimeYear"));
         int beginTimeMonth = Integer.parseInt(req.getParameter("beginTimeMonth"));
         int beginTimeDay = Integer.parseInt(req.getParameter("beginTimeDay"));
-        Date date = new Date(beginTimeYear - 1970, beginTimeMonth, beginTimeDay);
+        Date date = new Date(beginTimeYear, beginTimeMonth, beginTimeDay);
         int id = Integer.parseInt(req.getParameter("car"));
         Car car = CarService.getInstance().findById(id);
         int numberOfDays = Integer.parseInt(req.getParameter("numberOfDays"));

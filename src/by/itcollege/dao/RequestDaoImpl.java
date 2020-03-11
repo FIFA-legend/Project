@@ -25,7 +25,7 @@ public class RequestDaoImpl implements Dao<Request> {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
-            String data = request.getBeginTime().getYear() + "-" + (request.getBeginTime().getMonth() + 1) + "-" + request.getBeginTime().getDay();
+            String data = request.getBeginTime().getYear() + "-" + (request.getBeginTime().getMonth() + 1) + "-" + request.getBeginTime().getDate();
 
             String addRequestQuery = "INSERT INTO requests(cost, is_completed, number_of_days, begin_time, car_id, client_id, driver_id) VALUES (?,?,?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(addRequestQuery);

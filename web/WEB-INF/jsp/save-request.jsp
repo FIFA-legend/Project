@@ -17,7 +17,7 @@
             Begin Time <br><br>
             Year: <select name="beginTimeYear">
             <c:forEach var="i" begin="2020" end="2030">
-                <option>${i}</option>
+                <option value="${i}">${i}</option>
             </c:forEach>
             </select>
             Month: <select name="beginTimeMonth">
@@ -36,7 +36,7 @@
             </select>
             Day: <select name="beginTimeDay">
             <c:forEach var="i" begin="1" end="31">
-                <option>${i}</option>
+                <option value="${i}">${i}</option>
             </c:forEach>
             </select><br><br>
             Number of Days: <input type="number" name="numberOfDays"><br><br>
