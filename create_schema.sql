@@ -4,6 +4,7 @@ USE park;
 
 CREATE TABLE users(
 id INT NOT NULL AUTO_INCREMENT,
+is_on_request BOOLEAN,
 name VARCHAR(50) NOT NULL,
 last_name VARCHAR(50) NOT NULL,
 password VARCHAR(30) NOT NULL,
@@ -12,6 +13,7 @@ PRIMARY KEY(id));
 
 CREATE TABLE cars(
 id INT NOT NULL AUTO_INCREMENT,
+is_taken BOOLEAN,
 brand VARCHAR(30) NOT NULL,
 model VARCHAR(30),
 number VARCHAR(10) NOT NULL,
@@ -21,12 +23,13 @@ PRIMARY KEY(id));
 CREATE TABLE requests(
 id INT NOT NULL AUTO_INCREMENT,
 cost DOUBLE NOT NULL,
-is_comleted BOOLEAN,
-begin_time DATETIME,
+is_completed BOOLEAN,
+number_of_days INT NOT NULL,
+begin_time DATE,
 car_id INT NOT NULL,
 client_id INT NOT NULL,
 driver_id INT NOT NULL,
 PRIMARY KEY(id),
 FOREIGN KEY(car_id) REFERENCES cars(id),
 FOREIGN KEY(client_id) REFERENCES users(id),
-FOREIGN KEY(driver_id) REFERENCES users(id));
+FOREIGN KEY(driver_id) REFERENCES users(id)); 

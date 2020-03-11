@@ -4,8 +4,10 @@ import by.itcollege.entity.Role;
 import by.itcollege.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserDaoImpl implements Dao<User>, UserDao {
+public class UserDaoImpl implements Dao<User> {
 
     private static UserDaoImpl INSTANCE;
 
@@ -20,17 +22,17 @@ public class UserDaoImpl implements Dao<User>, UserDao {
         return INSTANCE;
     }
 
-    @Override
     public int save(User user) {
 
         try (Connection connection = ConnectionManager.getConnection()){
 
-            String addUserQuery = "INSERT INTO users(name, last_name, password, role) VALUES (?,?,?,?);";
+            String addUserQuery = "INSERT INTO users(is_on_request, name, last_name, password, role) VALUES (?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(addUserQuery, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().toString());
+            statement.setBoolean(1, false);
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getRole().toString());
             statement.executeUpdate();
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -63,11 +65,8 @@ public class UserDaoImpl implements Dao<User>, UserDao {
             User user = null;
 
             while (rs.next()) {
-                Role temp = null;
-                if (rs.getString("role").toLowerCase().equals("driver")) temp = Role.DRIVER;
-                if (rs.getString("role").toLowerCase().equals("client")) temp = Role.CLIENT;
-                if (rs.getString("role").toLowerCase().equals("dispatcher")) temp = Role.DISPATCHER;
-                user = new User(id, rs.getString("name"), rs.getString("last_name"), rs.getString("password"), temp);
+                Role temp = Role.valueOf(rs.getString("role"));
+                user = new User(id, rs.getBoolean("is_on_request"), rs.getString("name"), rs.getString("last_name"), rs.getString("password"), temp);
             }
 
             rs.close();
@@ -87,13 +86,14 @@ public class UserDaoImpl implements Dao<User>, UserDao {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
-            String updateUserQuary = "UPDATE users SET name = ?, last_name = ?, password = ?, role = ? WHERE id = ?;";
-            PreparedStatement statement = connection.prepareStatement(updateUserQuary);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().toString());
-            statement.setInt(5, id);
+            String updateUserQuery = "UPDATE users SET is_on_request = ?, name = ?, last_name = ?, password = ?, role = ? WHERE id = ?;";
+            PreparedStatement statement = connection.prepareStatement(updateUserQuery);
+            statement.setBoolean(1, user.isOnRequest());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getRole().toString());
+            statement.setInt(6, id);
 
             statement.execute();
 
@@ -122,6 +122,34 @@ public class UserDaoImpl implements Dao<User>, UserDao {
             e.printStackTrace();
         }
 
+    }
+
+    public List<User> findFreeDrivers() {
+
+        List<User> userList = new ArrayList<>();
+
+        try (Connection connection = ConnectionManager.getConnection()) {
+
+            String readUserQuery = "SELECT * FROM users WHERE is_on_request = false AND role = 'DRIVER';";
+            PreparedStatement statement = connection.prepareStatement(readUserQuery);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                User user = new User(rs.getInt("id"), rs.getBoolean("is_on_request"), rs.getString("name"), rs.getString("last_name"), rs.getString("password"), Role.DRIVER);
+                userList.add(user);
+            }
+
+            rs.close();
+            statement.close();
+
+            return userList;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

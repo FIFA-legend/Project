@@ -6,6 +6,8 @@ public class User {
 
     private int id;
 
+    private boolean isOnRequest;
+
     private String name;
 
     private String lastName;
@@ -14,15 +16,17 @@ public class User {
 
     private Role role;
 
-    public User(int id, String name, String lastName, String password, Role role) {
+    public User(int id, boolean isOnRequest, String name, String lastName, String password, Role role) {
         this.id = id;
+        this.isOnRequest = isOnRequest;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
         this.role = role;
     }
 
-    public User(String name, String lastName, String password, Role role) {
+    public User(boolean isOnRequest, String name, String lastName, String password, Role role) {
+        this.isOnRequest = isOnRequest;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -35,6 +39,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isOnRequest() {
+        return isOnRequest;
+    }
+
+    public void setOnRequest(boolean onRequest) {
+        isOnRequest = onRequest;
     }
 
     public Role getRole() {

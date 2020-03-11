@@ -6,7 +6,7 @@ import by.itcollege.entity.User;
 
 import java.sql.*;
 
-public class RequestDaoImpl implements Dao<Request>, CarAndRequestDao<Request> {
+public class RequestDaoImpl implements Dao<Request> {
 
     private static RequestDaoImpl INSTANCE;
 
@@ -21,19 +21,21 @@ public class RequestDaoImpl implements Dao<Request>, CarAndRequestDao<Request> {
         return INSTANCE;
     }
 
-    @Override
     public boolean save(Request request) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
-            String addRequestQuery = "INSERT INTO requests(cost, is_completed, begin_time, car_id, client_id, driver_id) VALUES (?,?,?,?,?,?);";
+            String data = request.getBeginTime().getYear() + "-" + (request.getBeginTime().getMonth() + 1) + "-" + request.getBeginTime().getDay();
+
+            String addRequestQuery = "INSERT INTO requests(cost, is_completed, number_of_days, begin_time, car_id, client_id, driver_id) VALUES (?,?,?,?,?,?,?);";
             PreparedStatement statement = connection.prepareStatement(addRequestQuery);
             statement.setDouble(1, request.getCost());
             statement.setBoolean(2, request.isCompleted());
-            statement.setDate(3, (Date) request.getBeginTime());
-            statement.setInt(4, request.getCar().getId());
-            statement.setInt(5, request.getClient().getId());
-            statement.setInt(6, request.getDriver().getId());
+            statement.setInt(3, request.getNumberOfDays());
+            statement.setString(4, data);
+            statement.setInt(5, request.getCar().getId());
+            statement.setInt(6, request.getClient().getId());
+            statement.setInt(7, request.getDriver().getId());
 
             statement.execute();
 
@@ -65,7 +67,7 @@ public class RequestDaoImpl implements Dao<Request>, CarAndRequestDao<Request> {
                 Car car = CarDaoImpl.newInstance().findById(rs.getInt("car_id"));
                 User client = UserDaoImpl.newInstance().findById(rs.getInt("client_id"));
                 User driver = UserDaoImpl.newInstance().findById(rs.getInt("driver_id"));
-                request = new Request(rs.getDouble("cost"), rs.getBoolean("is_completed"), car, rs.getDate("begin_time"), client, driver);
+                request = new Request(rs.getDouble("cost"), rs.getBoolean("is_completed"), rs.getInt("number_of_days"), car, rs.getDate("end_time"), client, driver);
             }
 
             rs.close();
@@ -85,15 +87,16 @@ public class RequestDaoImpl implements Dao<Request>, CarAndRequestDao<Request> {
 
         try (Connection connection = ConnectionManager.getConnection()){
 
-            String updateRequestQuery = "UPDATE requests SET cost = ?, is_completed = ?, begin_time = ?, car_id = ?, client_id = ?, driver_id = ? WHERE id = ?;";
+            String updateRequestQuery = "UPDATE requests SET cost = ?, is_completed = ?, number_of_days = ?, begin_time = ?, car_id = ?, client_id = ?, driver_id = ? WHERE id = ?;";
             PreparedStatement statement = connection.prepareStatement(updateRequestQuery);
             statement.setDouble(1, request.getCost());
             statement.setBoolean(2, request.isCompleted());
-            statement.setDate(3, (Date) request.getBeginTime());
-            statement.setInt(4, request.getCar().getId());
-            statement.setInt(5, request.getClient().getId());
-            statement.setInt(6,request.getDriver().getId());
-            statement.setInt(7, id);
+            statement.setInt(3, request.getNumberOfDays());
+            statement.setDate(4, (Date) request.getBeginTime());
+            statement.setInt(5, request.getCar().getId());
+            statement.setInt(6, request.getClient().getId());
+            statement.setInt(7,request.getDriver().getId());
+            statement.setInt(8, id);
 
             statement.execute();
 

@@ -27,10 +27,10 @@ public class SaveCarServlet extends HttpServlet {
         String brand = req.getParameter("brand");
         String number = req.getParameter("number");
         CarType carType = CarType.valueOf(req.getParameter("carType"));
-        Car car = new Car(model, brand, carType, number);
+        Car car = new Car(false, model, brand, number, carType);
         if (!model.isEmpty() && !number.isEmpty()) {
             if (carDao.save(car)) {
-                req.getRequestDispatcher("/WEB-INF/jsp/after-adding-car.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/jsp/adding-car-success.jsp").forward(req, resp);
             } else {
                 resp.sendRedirect("/car/save");
             }

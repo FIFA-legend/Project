@@ -11,6 +11,8 @@ public class Request {
 
     private boolean isCompleted;
 
+    private int numberOfDays;
+
     private Car car;
 
     private Date beginTime;
@@ -19,19 +21,21 @@ public class Request {
 
     private User driver;
 
-    public Request(double cost, boolean isCompleted, Car car, Date beginTime, User client, User driver) {
+    public Request(double cost, boolean isCompleted, int numberOfDays, Car car, Date beginTime, User client, User driver) {
         this.cost = cost;
         this.isCompleted = isCompleted;
+        this.numberOfDays = numberOfDays;
         this.car = car;
         this.beginTime = beginTime;
         this.client = client;
         this.driver = driver;
     }
 
-    public Request(int id, double cost, boolean isCompleted, Car car, Date beginTime, User client, User driver) {
+    public Request(int id, double cost, boolean isCompleted, int numberOfDays, Car car, Date beginTime, User client, User driver) {
         this.id = id;
         this.cost = cost;
         this.isCompleted = isCompleted;
+        this.numberOfDays = numberOfDays;
         this.car = car;
         this.beginTime = beginTime;
         this.client = client;
@@ -60,6 +64,14 @@ public class Request {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public int getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(int numberOfDays) {
+        this.numberOfDays = numberOfDays;
     }
 
     public Car getCar() {

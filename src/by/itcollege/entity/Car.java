@@ -4,7 +4,9 @@ import java.util.Objects;
 
 public class Car {
 
-    int id;
+    private int id;
+
+    private boolean isTaken;
 
     private String model;
 
@@ -15,15 +17,17 @@ public class Car {
     private CarType carType;
 
 
-    public Car(String model, String brand, CarType carType, String number) {
+    public Car(int id, boolean isTaken, String model, String brand, String number, CarType carType) {
+        this.id = id;
+        this.isTaken = isTaken;
         this.model = model;
         this.brand = brand;
-        this.carType = carType;
         this.number = number;
+        this.carType = carType;
     }
 
-    public Car(int id, String model, String brand, String number, CarType carType) {
-        this.id = id;
+    public Car(boolean isTaken, String model, String brand, String number, CarType carType) {
+        this.isTaken = isTaken;
         this.model = model;
         this.brand = brand;
         this.number = number;
@@ -36,6 +40,14 @@ public class Car {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
     }
 
     public String getModel() {
