@@ -8,15 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Save Car</title>
+    <title>Save car</title>
 </head>
 <body>
     <div align="center">
         <form action="${pageContext.request.contextPath}/car/save" method="post">
-            Model <input name="model"><br><br>
-            Brand (optional) <input name="brand"><br><br>
-            Number <input name="number"><br><br>
-            Type of the car <select name="carType">
+            Model: <input name="model"><br><br>
+            Brand (optional): <input name="brand"><br><br>
+            Number: <input name="number"><br><br>
+            Type of the car: <select name="carType">
                 <option>NORMAL</option>
                 <option>BUSINESS</option>
                 <option>SPORT</option>

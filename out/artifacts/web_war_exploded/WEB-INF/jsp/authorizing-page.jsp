@@ -12,7 +12,7 @@
 </head>
 <body>
     <div align="center" >
-        <form action="${pageContext.request.contextPath}/authorizing" method="post">
+        <form action="${pageContext.request.contextPath}/login" method="post">
             Login <input name="login"/> <br><br>
             Password <input type="password" name="password"/> <br><br>
             <input type="submit" value="Continue" /> <br><br>
