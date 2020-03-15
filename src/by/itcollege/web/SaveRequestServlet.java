@@ -37,14 +37,24 @@ public class SaveRequestServlet extends HttpServlet {
         int numberOfDays = Integer.parseInt(req.getParameter("numberOfDays"));
         double price = Cost.count(numberOfDays, car.getCarType());
         User user = (User) req.getSession().getAttribute("user");
-        User driver = UserService.getInstance().getFreeDrivers().get(0);
-        Request request = new Request(price, false, numberOfDays, car, date, user, driver);
-        if (RequestService.getInstance().createRequest(request) && user != null) {
-            req.setAttribute("cost", price);
-            req.setAttribute("driver", driver);
-            req.getRequestDispatcher("/WEB-INF/jsp/request-accepted.jsp").forward(req, resp);
-        } else {
-            req.getRequestDispatcher("/request/save").forward(req, resp);
+        try {
+            User driver = UserService.getInstance().getFreeDrivers().get(0);
+            Request request = new Request(price, false, numberOfDays, car, date, user, driver);
+            if (RequestService.getInstance().createRequest(request) && user != null) {
+                req.setAttribute("cost", price);
+                req.setAttribute("driver", driver);
+                car.setTaken(true);
+                CarService.getInstance().updateCar(car);
+                driver.setOnRequest(true);
+                UserService.getInstance().updateUser(driver);
+                req.getRequestDispatcher("/WEB-INF/jsp/request-accepted.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("/request/save").forward(req, resp);
+            }
+        } catch (Exception e) {
+            req.setAttribute("driversAvailable", false);
+            req.setAttribute("cars", CarService.getInstance().getAllCars());
+            req.getRequestDispatcher("/WEB-INF/jsp/save-request.jsp").forward(req, resp);
         }
     }
 }

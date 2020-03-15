@@ -32,4 +32,7 @@ public class UserService {
         return UserDaoImpl.newInstance().findById(id);
     }
 
+    public void updateUser(User user) {
+        UserDaoImpl.newInstance().update(user.getId(), user);
+    }
 }

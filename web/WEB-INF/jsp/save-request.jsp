@@ -50,6 +50,10 @@
             One day of a normal car is 30$<br><br>
             One day of a sport car is 50$<br><br>
             One day of a business car is 100$<br><br>
+            <c:if test="${requestScope.driversAvailable == false}">
+                <p>Sorry, no drivers available :(</p>
+                <p>Try later</p>
+            </c:if>
         <input type="submit" value="Save">
         </form>
     </div>
