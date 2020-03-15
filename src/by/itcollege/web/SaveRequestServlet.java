@@ -23,7 +23,7 @@ public class SaveRequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("cars", CarService.getInstance().getAllCars());
-        req.getRequestDispatcher("/WEB-INF/jsp/save-request.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/save-request.jsp").include(req, resp);
     }
 
     @Override

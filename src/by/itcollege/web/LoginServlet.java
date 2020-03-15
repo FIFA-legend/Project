@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login", name = "Login servlet")
+@WebServlet(urlPatterns = "/login", name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/authorizing-page.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/authorizing-page.jsp").include(req, resp);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("login"));
         String password = req.getParameter("password");
         User user = UserService.getInstance().findUser(id);
-        if (user.getPassword().equals(password)){
+        if (user != null && user.getPassword().equals(password)){
             req.setAttribute("name", user.getName());
             req.setAttribute("surname", user.getLastName());
             HttpSession session = req.getSession();

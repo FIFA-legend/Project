@@ -1,3 +1,4 @@
+
 package by.itcollege.web;
 
 import by.itcollege.dao.CarDaoImpl;
@@ -18,7 +19,7 @@ public class SaveCarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/save-car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/save-car.jsp").include(req, resp);
     }
 
     @Override
@@ -37,3 +38,4 @@ public class SaveCarServlet extends HttpServlet {
         } else resp.sendRedirect("/car/save");
     }
 }
+

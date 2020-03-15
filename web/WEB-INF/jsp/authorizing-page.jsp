@@ -18,7 +18,7 @@
             Password <input type="password" name="password"/> <br><br>
             <input type="submit" value="Continue" /> <br><br>
         </form>
-        <c:if test="${requestScope.passwordMatch == false}">Wrong password</c:if>
+        <c:if test="${requestScope.passwordMatch == false}">Wrong login or password</c:if>
         <p>Don't have an account?</p>
         <input class="button-main-page" type="submit" value="Create it" onclick="location.href = '/user/save'">
     </div>
