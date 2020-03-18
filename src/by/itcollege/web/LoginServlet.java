@@ -29,12 +29,12 @@ public class LoginServlet extends HttpServlet {
             req.setAttribute("surname", user.getLastName());
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            if (!user.getRole().toString().equals("CLIENT")) req.getRequestDispatcher("/WEB-INF/jsp/workers-main-page.jsp").forward(req, resp);
-            else req.getRequestDispatcher("/WEB-INF/jsp/client-main-page.jsp").forward(req, resp);
+            if (!user.getRole().toString().equals("CLIENT")) req.getRequestDispatcher("/WEB-INF/jsp/workers-main-page.jsp").include(req, resp);
+            else req.getRequestDispatcher("/WEB-INF/jsp/client-main-page.jsp").include(req, resp);
         }
         else {
             req.setAttribute("passwordMatch", false);
-            req.getRequestDispatcher("/WEB-INF/jsp/authorizing-page.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/authorizing-page.jsp").include(req, resp);
         }
     }
 }

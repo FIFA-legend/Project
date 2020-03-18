@@ -35,7 +35,7 @@ public class SaveUserServlet extends HttpServlet {
             if (id != 0) {
                 req.setAttribute("id", id);
                 req.setAttribute("User", user);
-                req.getRequestDispatcher("/WEB-INF/jsp/registration-success.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/jsp/registration-success.jsp").include(req, resp);
             } else {
                 resp.sendRedirect("/user/save");
             }
