@@ -47,14 +47,14 @@ public class SaveRequestServlet extends HttpServlet {
                 CarService.getInstance().updateCar(car);
                 driver.setOnRequest(true);
                 UserService.getInstance().updateUser(driver);
-                req.getRequestDispatcher("/WEB-INF/jsp/request-accepted.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/jsp/request-accepted.jsp").include(req, resp);
             } else {
-                req.getRequestDispatcher("/request/save").forward(req, resp);
+                req.getRequestDispatcher("/request/save").include(req, resp);
             }
         } catch (Exception e) {
             req.setAttribute("driversAvailable", false);
             req.setAttribute("cars", CarService.getInstance().getAllCars());
-            req.getRequestDispatcher("/WEB-INF/jsp/save-request.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/save-request.jsp").include(req, resp);
         }
     }
 }
