@@ -25,7 +25,7 @@ public class CarDaoImpl implements Dao<Car> {
         return INSTANCE;
     }
 
-    public boolean save(Car car) {
+    public int save(Car car) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -41,11 +41,11 @@ public class CarDaoImpl implements Dao<Car> {
 
             statement.close();
 
-            return true;
+            return 1;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
 
     }
