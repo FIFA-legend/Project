@@ -3,7 +3,7 @@ package by.itcollege.service;
 import by.itcollege.dao.RequestDaoImpl;
 import by.itcollege.entity.Request;
 
-public class RequestService {
+public class RequestService implements Service<Request>{
 
     private static RequestService INSTANCE;
 
@@ -16,7 +16,23 @@ public class RequestService {
         return  INSTANCE;
     }
 
-    public boolean createRequest(Request request) {
+    @Override
+    public int save(Request request) {
         return RequestDaoImpl.newInstance().save(request);
+    }
+
+    @Override
+    public Request findById(int id) {
+        return RequestDaoImpl.newInstance().findById(id);
+    }
+
+    @Override
+    public void update(Request dao) {
+        RequestDaoImpl.newInstance().update(dao.getId(), dao);
+    }
+
+    @Override
+    public void delete(int id) {
+        RequestDaoImpl.newInstance().delete(id);
     }
 }

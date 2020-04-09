@@ -4,6 +4,7 @@ package by.itcollege.web;
 import by.itcollege.dao.CarDaoImpl;
 import by.itcollege.entity.Car;
 import by.itcollege.entity.CarType;
+import by.itcollege.service.CarService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/car/save", name = "SaveCarServlet")
 public class SaveCarServlet extends HttpServlet {
 
-    private CarDaoImpl carDao = CarDaoImpl.newInstance();
+    private CarService carService = CarService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,7 +31,7 @@ public class SaveCarServlet extends HttpServlet {
         CarType carType = CarType.valueOf(req.getParameter("carType"));
         Car car = new Car(false, model, brand, number, carType);
         if (!model.isEmpty() && !number.isEmpty()) {
-            if (carDao.save(car)) {
+            if (carService.save(car) != 0) {
                 req.getRequestDispatcher("/WEB-INF/jsp/adding-car-success.jsp").include(req, resp);
             } else {
                 resp.sendRedirect("/car/save");

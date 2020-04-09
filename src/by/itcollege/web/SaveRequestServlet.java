@@ -40,13 +40,13 @@ public class SaveRequestServlet extends HttpServlet {
         try {
             User driver = UserService.getInstance().getFreeDrivers().get(0);
             Request request = new Request(price, false, numberOfDays, car, date, user, driver);
-            if (RequestService.getInstance().createRequest(request) && user != null) {
+            if (RequestService.getInstance().save(request) != 0 && user != null) {
                 req.setAttribute("cost", price);
                 req.setAttribute("driver", driver);
                 car.setTaken(true);
-                CarService.getInstance().updateCar(car);
+                CarService.getInstance().update(car);
                 driver.setOnRequest(true);
-                UserService.getInstance().updateUser(driver);
+                UserService.getInstance().update(driver);
                 req.getRequestDispatcher("/WEB-INF/jsp/request-accepted.jsp").include(req, resp);
             } else {
                 req.getRequestDispatcher("/request/save").include(req, resp);

@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("login"));
         String password = req.getParameter("password");
-        User user = UserService.getInstance().findUser(id);
+        User user = UserService.getInstance().findById(id);
         if (user != null && user.getPassword().equals(password)){
             req.setAttribute("name", user.getName());
             req.setAttribute("surname", user.getLastName());

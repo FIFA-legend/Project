@@ -1,6 +1,5 @@
 package by.itcollege.web;
 
-import by.itcollege.dao.UserDaoImpl;
 import by.itcollege.entity.Role;
 import by.itcollege.entity.User;
 import by.itcollege.service.UserService;
@@ -31,7 +30,7 @@ public class SaveUserServlet extends HttpServlet {
             resp.sendRedirect("/user/save");
         } else {
             User user = new User(false, name, lastName, password, role);
-            int id = UserService.getInstance().createNewUser(user);
+            int id = UserService.getInstance().save(user);
             if (id != 0) {
                 req.setAttribute("id", id);
                 req.setAttribute("User", user);
