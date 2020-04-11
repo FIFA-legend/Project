@@ -21,7 +21,8 @@ public class UserDaoImpl implements Dao<User> {
         }
         return INSTANCE;
     }
-
+    
+    @Override
     public int save(User user) {
 
         try (Connection connection = ConnectionManager.getConnection()){

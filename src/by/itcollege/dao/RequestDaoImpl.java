@@ -21,7 +21,8 @@ public class RequestDaoImpl implements Dao<Request> {
         return INSTANCE;
     }
 
-    public boolean save(Request request) {
+    @Override
+    public int save(Request request) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
@@ -36,16 +37,20 @@ public class RequestDaoImpl implements Dao<Request> {
             statement.setInt(5, request.getCar().getId());
             statement.setInt(6, request.getClient().getId());
             statement.setInt(7, request.getDriver().getId());
+            statement.executeUpdate();
 
-            statement.execute();
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            request.setId(id);
 
+            rs.close();
             statement.close();
-
-            return true;
+            return id;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
 
     }

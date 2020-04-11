@@ -5,7 +5,7 @@ import by.itcollege.entity.User;
 
 import java.util.List;
 
-public class UserService {
+public class UserService implements Service<User>{
 
     private static UserService INSTANCE;
 
@@ -20,19 +20,27 @@ public class UserService {
         return  INSTANCE;
     }
 
-    public List<User> getFreeDrivers() {
-        return UserDaoImpl.newInstance().findFreeDrivers();
-    }
-
-    public int createNewUser(User user) {
+    @Override
+    public int save(User user) {
         return UserDaoImpl.newInstance().save(user);
     }
 
-    public User findUser(int id) {
+    @Override
+    public User findById(int id) {
         return UserDaoImpl.newInstance().findById(id);
     }
 
-    public void updateUser(User user) {
+    @Override
+    public void update(User user) {
         UserDaoImpl.newInstance().update(user.getId(), user);
+    }
+
+    @Override
+    public void delete(int id) {
+        UserDaoImpl.newInstance().delete(id);
+    }
+
+    public List<User> getFreeDrivers() {
+        return UserDaoImpl.newInstance().findFreeDrivers();
     }
 }

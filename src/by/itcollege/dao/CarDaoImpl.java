@@ -3,10 +3,7 @@ package by.itcollege.dao;
 import by.itcollege.entity.Car;
 import by.itcollege.entity.CarType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,27 +22,32 @@ public class CarDaoImpl implements Dao<Car> {
         return INSTANCE;
     }
 
-    public boolean save(Car car) {
+    @Override
+    public int save(Car car) {
 
         try (Connection connection = ConnectionManager.getConnection()) {
 
             String saveCarQuery = "INSERT INTO cars(is_taken, brand, model, number, car_type) VALUES (?,?,?,?,?);";
-            PreparedStatement statement = connection.prepareStatement(saveCarQuery);
+            PreparedStatement statement = connection.prepareStatement(saveCarQuery, Statement.RETURN_GENERATED_KEYS);
             statement.setBoolean(1, false);
             statement.setString(2, car.getBrand());
             statement.setString(3, car.getModel());
             statement.setString(4, car.getNumber());
             statement.setString(5, car.getCarType().toString());
+            statement.executeUpdate();
 
-            statement.execute();
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            car.setId(id);
 
+            rs.close();
             statement.close();
-
-            return true;
+            return id;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
 
     }
